@@ -9,13 +9,13 @@ var playState = {
   scoreText : '',
   healthText : '',
   init : function(spriteKey) {
-         this.spriteKey = spriteKey;  
+         this.spriteKey = spriteKey;
       },
   create : function() {
 
     // the world:
     // -800,-600                 800,-600
-    //                 0,0 
+    //                 0,0
     // -800,600                  800,600
     //  A simple background for our game
     this.sky = game.add.sprite(-800, -600, 'sky');
@@ -66,11 +66,11 @@ var playState = {
     this.game.physics.arcade.enable(this.mushroomguy);
 
     //  seedling physics properties. Give the little guy a slight bounce.
-  
+
     this.player.body.bounce.y = 0.2;
     this.player.body.gravity.y = 300;
     this.player.body.collideWorldBounds = true;
-  
+
     this.baddie.body.gravity.y = 300;
     this.baddie.body.collideWorldBounds = true;
     this.baddie.body.bounce.y = 0.2;
@@ -84,7 +84,7 @@ var playState = {
     //  Our two animations, walking left and right.
     this.player.animations.add('left', [0, 1, 2, 3], 10, true);
     this.player.animations.add('right', [5, 6, 7, 8], 10, true);
-  
+
     this.player.animations.add('bobble');
 
     this.stars = game.add.group();
@@ -99,7 +99,7 @@ var playState = {
         //  Create a star inside of the 'stars' group
         xx = game.rnd.integerInRange(-800,800);
         yy = game.rnd.integerInRange(-600,600);
-  
+
         var star = this.stars.create(xx, yy, 'star');
 
         //  Let gravity do its thing
@@ -120,10 +120,10 @@ var playState = {
 //              'right' : Phaser.KeyCode.D});
 
     game.camera.follow(this.player);
-    
+
     this.characterJumped = false;
 
-    }, 
+    },
 update : function() {
 
     // baddie turns around if it reaches the horizontal edges of the world
@@ -233,7 +233,7 @@ seedlingDies : function(seedling, baddie) {
   text.anchor.set(0.5);
 
   text.x = 200;
-  text.y = 200; 
+  text.y = 200;
 
   // go to end screen (still need to be made, just go back to menu)
   game.state.start('end',true,false,this.score,this.player.health,this.level);
@@ -249,4 +249,5 @@ speak : function(seedling, mushroomguy) {
     text.y = mushroomguy.y + 10;
     seedling.heal(20);
     }
-};
+
+//seedlingPower : function() 
