@@ -33,7 +33,7 @@ var loadState =  {
            // non-playing characters
            game.load.atlasJSONArray('mushroomguy', 'assets/MushroomGuyNew.png',
            'assets/MushroomGuyNew.json');
-           game.load.spritesheet('baddie', 'assets/Slug.png', 32, 32, 4);
+           game.load.spritesheet('baddie', 'assets/Slug.png', 192, 192, 1);
            game.load.atlasJSONArray('dandelion', 'assets/DandelionEnemyClone.png',
            'assets/DandelionEnemyClone.json');
          
