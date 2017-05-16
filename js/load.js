@@ -41,10 +41,17 @@ var loadState =  {
            game.load.atlasJSONArray('seedlingBrown', 'assets/SeedlingBrown.png',
                                     'assets/SeedlingBrown.json');
            game.load.spritesheet('seedling', 'assets/seedling.png', 54, 96, 9);
-           }
-           game.load.atlasJSONArray('DandelionPlayer', 'assets/DandelionPlayer.png',
-                                    'assets/DandelionPlayer.json');
-  create : function() {
+
+           game.load.atlasJSONArray('DandelionPlayer', 'assets/DandelionPlayer.png','assets/DandelionPlayer.json');
+
+           game.load.atlasJSONArray('seedlingRed', 'assets/SeedlingRed.png',
+           'assets/SeedlingRed.json');
+
+           game.load.atlasJSONArray('seedlingBlue', 'assets/SeedlingBlue.png',
+           'assets/SeedlingBlue.json');
+         },
+
+  create : function () {
              game.state.start('menu');
-           }
+         }
 };
