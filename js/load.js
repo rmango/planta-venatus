@@ -36,7 +36,7 @@ var loadState =  {
            // non-playing characters
            game.load.atlasJSONArray('mushroomguy', 'assets/MushroomGuyNew.png',
            'assets/MushroomGuyNew.json');
-           game.load.spritesheet('baddie', 'assets/Slug.png', 32, 32, 4);
+           game.load.spritesheet('baddie', 'assets/Slug.png', 192, 192, 1);
            game.load.atlasJSONArray('dandelion', 'assets/DandelionEnemyClone.png',
            'assets/DandelionEnemyClone.json');
 
@@ -44,10 +44,17 @@ var loadState =  {
            game.load.atlasJSONArray('seedlingBrown', 'assets/SeedlingBrown.png',
                                     'assets/SeedlingBrown.json');
            game.load.spritesheet('seedling', 'assets/seedling.png', 54, 96, 9);
-           }
-           game.load.atlasJSONArray('DandelionPlayer', 'assets/DandelionPlayer.png',
-                                    'assets/DandelionPlayer.json');
-  create : function() {
+
+           game.load.atlasJSONArray('DandelionPlayer', 'assets/DandelionPlayer.png','assets/DandelionPlayer.json');
+
+           game.load.atlasJSONArray('seedlingRed', 'assets/SeedlingRed.png',
+           'assets/SeedlingRed.json');
+
+           game.load.atlasJSONArray('seedlingBlue', 'assets/SeedlingBlue.png',
+           'assets/SeedlingBlue.json');
+         },
+
+  create : function () {
              game.state.start('menu');
-           }
+         }
 };
