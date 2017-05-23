@@ -55,9 +55,6 @@ var playState = {
     this.player.health = this.hpMax
     this.player.maxHealth = this.hpMax;
 
-    //add dog thing
-    this.baddie = game.add.sprite(396, game.world.bottom - 160, 'baddie');
-
     //  We need to enable physics on the player and the other characters
 
     this.game.physics.arcade.enable(this.player);
@@ -71,10 +68,33 @@ var playState = {
     this.player.body.gravity.y = 300;
     this.player.body.collideWorldBounds = true;
 
-    this.baddie.body.gravity.y = 300;
-    this.baddie.body.collideWorldBounds = true;
-    this.baddie.body.bounce.y = 0.2;
-    this.baddie.body.velocity.x = 100;
+    //  create baddies in a group
+    this.baddie.scale.setTo(0.5,0.5);
+    this.baddie = game.add.group();
+    this.baddie.enableBody = true;
+
+    //create 4 in a group in random locations
+    var x;
+    var y;
+    for (var i = 0; i < 5; i++);
+    {
+      //now create baddie(slug) inside group
+      x = game.rnd.integerInRange(-800,800);
+      y = game.rnd.integerInRange(-600,600);
+
+      var baddie = this.baddie.create(x, y, 'slug');
+
+      //gravity
+      baddie.body.gravity.y = 2;
+
+      //random bounce
+      baddie.body.bounce.y = Math.random() * 0.2;
+    }
+
+    //this.baddie.body.gravity.y = 300;
+    //this.baddie.body.collideWorldBounds = true;
+    //this.baddie.body.bounce.y = 0.2;
+    //this.baddie.body.velocity.x = 100;
 
     this.dandelion.body.bounce.y = 0.5;
     this.dandelion.body.gravity.y = 300;
