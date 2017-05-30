@@ -28,7 +28,7 @@ var loadState =  {
            game.load.image('ground', 'assets/platform.png');
 
            // background of end page
-           game.load.image('asphalt', 'assets.asphalt.jpg');
+           game.load.image('asphalt', 'assets/asphalt.jpg');
 
            //  treasures to collect to gain points
            game.load.image('star', 'assets/star.png');
@@ -36,7 +36,7 @@ var loadState =  {
            // non-playing characters
            game.load.atlasJSONArray('mushroomguy', 'assets/MushroomGuyNew.png',
            'assets/MushroomGuyNew.json');
-           game.load.spritesheet('baddie', 'assets/Slug.png', 192, 192, 1);
+           game.load.atlasJSONArray('baddie', 'assets/Slug.png', 'assets/Slug.json');
            game.load.atlasJSONArray('dandelion', 'assets/DandelionEnemyClone.png',
            'assets/DandelionEnemyClone.json');
 
