@@ -4,10 +4,11 @@ var playState = {
 
   // scores, healt points, and levels
   score : 0,
-  level : 0,
+  level : 1,
   hpMax : 100,
   scoreText : '',
   healthText : '',
+  
   init : function(spriteKey) {
          this.spriteKey = spriteKey;
       },
@@ -17,6 +18,9 @@ var playState = {
     // -800,-600                 800,-600
     //                 0,0
     // -800,600                  800,600
+    
+    // a timer
+
     //  A simple background for our game
     this.sky = game.add.sprite(-800, -600, 'sky');
 
@@ -55,13 +59,10 @@ var playState = {
     this.player.health = this.hpMax
     this.player.maxHealth = this.hpMax;
 
-    //add dog thing
-    this.baddie = game.add.sprite(396, game.world.bottom - 160, 'baddie');
-
     //  We need to enable physics on the player and the other characters
 
     this.game.physics.arcade.enable(this.player);
-    this.game.physics.arcade.enable(this.baddie);
+    //this.game.physics.arcade.enable(this.baddie);
     this.game.physics.arcade.enable(this.dandelion);
     this.game.physics.arcade.enable(this.mushroomguy);
 
@@ -71,10 +72,41 @@ var playState = {
     this.player.body.gravity.y = 300;
     this.player.body.collideWorldBounds = true;
 
-    this.baddie.body.gravity.y = 300;
-    this.baddie.body.collideWorldBounds = true;
-    this.baddie.body.bounce.y = 0.2;
-    this.baddie.body.velocity.x = 100;
+
+    //  create baddies in a group
+    //this.baddie.scale.setTo(0.5,0.5);
+    this.baddies = game.add.group();
+    this.baddies.enableBody = true;
+
+    //create 4 in a group in random locations
+    var xx;
+    var yy;
+    for (var i = 0; i < 5; i++)
+    {
+      //now create baddie(slug) inside group
+      xx = game.rnd.integerInRange(-800,800);
+      yy = game.rnd.integerInRange(-600,600);
+
+      var baddie = this.baddies.create(xx, yy, 'baddie');
+
+      var randomNumber = game.rnd.frac();
+      baddie.scale.setTo(randomNumber, randomNumber);
+
+      //gravity
+      baddie.body.gravity.y = 2;
+
+      //random bounce
+      baddie.body.bounce.y = Math.random() * 0.2;
+    }
+
+    //this.baddie.body.gravity.y = 300;
+    //this.baddie.body.collideWorldBounds = true;
+    //this.baddie.body.bounce.y = 0.2;
+    //this.baddie.body.velocity.x = 100;
+
+    this.mushroomguy.body.bounce.y = 0.2;
+    this.mushroomguy.body.gravity.y = 0;
+    this.mushroomguy.body.collideWorldBounds = true;
 
     this.dandelion.body.bounce.y = 0.5;
     this.dandelion.body.gravity.y = 300;
@@ -111,8 +143,10 @@ var playState = {
 
     this.scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000', backgroundColor: 'rgba(100,100,100,0.5)' });
     this.scoreText.fixedToCamera = true;
-    this.healthText = game.add.text(16, 56, 'health: ' + this.hpMax, { fontSize: '32px', fill: '#000', backgroundColor: 'rgba(100,100,100,0.5)' });
+    this.healthText = game.add.text(16, 56, 'health: ' + this.player.health, { fontSize: '32px', fill: '#000', backgroundColor: 'rgba(100,100,100,0.5)' });
     this.healthText.fixedToCamera = true;
+    this.levelText = game.add.text(680,16, 'level: ' + this.level, {fontSize: '32px', fill: '#000', backgroundColor: 'rgba(100,100,100,0.5)'});
+    this.levelText.fixedToCamera = true;
 
     this.cursors = game.input.keyboard.createCursorKeys();
 //    cursors = game.input.keyboard.addKeys({'up' : Phaser.KeyCode.W,
@@ -127,7 +161,7 @@ var playState = {
 update : function() {
 
     // baddie turns around if it reaches the horizontal edges of the world
-    if (this.baddie.x == game.world.width - this.baddie.width)
+    /*if (this.baddie.x == game.world.width - this.baddie.width)
     {
       this.baddie.body.velocity.x = -100;
     }
@@ -135,12 +169,12 @@ update : function() {
     if (this.baddie.x == 0)
     {
       this.baddie.body.velocity.x = 100;
-    }
+    }*/
 
     // all the game elements collide with the platforms
     game.physics.arcade.collide(this.player, this.platforms);
     game.physics.arcade.collide(this.stars, this.platforms);
-    game.physics.arcade.collide(this.baddie, this.platforms);
+    game.physics.arcade.collide(this.baddies, this.platforms);
     game.physics.arcade.collide(this.dandelion, this.platforms);
 
     // other collisions
@@ -148,9 +182,11 @@ update : function() {
 
     // other interactions
     game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
-    game.physics.arcade.overlap(this.player, this.baddie, this.seedlingDies, null, this);
+    game.physics.arcade.overlap(this.player, this.baddies, this.seedlingDies, null, this);
     game.physics.arcade.overlap(this.player, this.mushroomguy, this.speak, null, {this:this, text:this.quotes.pokemon1});
 
+
+    game.physics.arcade.collide(this.player, this.mushroomguy, this.speak, null, this);
     //  Reset the seedlings velocity (movement)
     this.player.body.velocity.x = 0;
 
@@ -195,15 +231,19 @@ update : function() {
         //game.camera.x = seedling.x;
         //game.camera.y = seedling.y;
     console.log("this.player.health: " + this.player.health);
-    console.log("this.score: " + this.score);
-    console.log("bounds: " + game.world.bounds);
 
     // wrap around when player reaches world bounds
     //game.world.wrap(this.player,0,true);
 
         //console.log(game.camera.x + "This is the game camera");
 
+
 },
+randomQuote : function () {
+    var keys = Object.keys(this.quotes)
+    return this.quotes[keys[ keys.length * Math.random() << 0]];
+},
+
 collectStar : function(seedling, star) {
 
     // Removes the star from the screen
@@ -221,12 +261,9 @@ doDamage : function() {
     };
 },
 seedlingDies : function(seedling, baddie) {
-  console.log("player.x: " + this.player.x);
-  console.log("player.y: " + this.player.y);
-  console.log("seedling.x: " + seedling.x);
-  console.log("seedling.y: " + seedling.y);
-  console.log("baddie.x: " + baddie.x);
-  console.log("baddie.y: " + baddie.y);
+  //console.log("seedling.x: " + seedling.x);
+  //console.log("seedling.y: " + seedling.y);
+
   seedling.kill();
   var style = { font: "32px Arial", fill: "black", wordWrap: true, align: "center", backgroundColor: "transparent" };
   var text = game.add.text(0, 0, "you died :(", style);
@@ -238,16 +275,14 @@ seedlingDies : function(seedling, baddie) {
   // go to end screen (still need to be made, just go back to menu)
   game.state.start('end',true,false,this.score,this.player.health,this.level);
   },
-speak : function(seedling, mushroomguy) {
-
-    console.log(this.text);
+speak : function() {
+    quote = this.randomQuote();
+    console.log(quote);
     var style = { font: "12px Arial", fill: "black", wordWrap: true, align: "center", backgroundColor: "transparent" };
-    var text = game.add.text(mushroomguy.x + 10, mushroomguy.y + 10, this.text, style);
-    //text.anchor.set(0.5);
+    var textObject = game.add.text(this.mushroomguy.x + 10, this.mushroomguy.y + 10, quote, style);
+    console.log(this.player.health);
+    this.player.heal(20);
+    this.healthText.text = 'health: ' + this.player.health;
 
-    text.x = mushroomguy.x + 10
-    text.y = mushroomguy.y + 10;
-    seedling.heal(20);
   }
-};
-//seedlingPower : function()
+}; // end of playState object definition
