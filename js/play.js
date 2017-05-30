@@ -8,6 +8,7 @@ var playState = {
   hpMax : 100,
   scoreText : '',
   healthText : '',
+  
   init : function(spriteKey) {
          this.spriteKey = spriteKey;
       },
@@ -17,6 +18,9 @@ var playState = {
     // -800,-600                 800,-600
     //                 0,0
     // -800,600                  800,600
+    
+    // a timer
+
     //  A simple background for our game
     this.sky = game.add.sprite(-800, -600, 'sky');
 
@@ -70,6 +74,10 @@ var playState = {
     this.player.body.bounce.y = 0.2;
     this.player.body.gravity.y = 300;
     this.player.body.collideWorldBounds = true;
+
+    this.mushroomguy.body.bounce.y = 0.2;
+    this.mushroomguy.body.gravity.y = 0;
+    this.mushroomguy.body.collideWorldBounds = true;
 
     this.baddie.body.gravity.y = 300;
     this.baddie.body.collideWorldBounds = true;
@@ -149,7 +157,7 @@ update : function() {
     // other interactions
     game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
     game.physics.arcade.overlap(this.player, this.baddie, this.seedlingDies, null, this);
-    game.physics.arcade.overlap(this.player, this.mushroomguy, this.speak, null, {this:this, text:this.quotes.pokemon1});
+    game.physics.arcade.collide(this.player, this.mushroomguy, this.speak, null, this);
 
     //  Reset the seedlings velocity (movement)
     this.player.body.velocity.x = 0;
@@ -204,6 +212,10 @@ update : function() {
         //console.log(game.camera.x + "This is the game camera");
 
 },
+randomQuote : function () {
+    var keys = Object.keys(this.quotes)
+    return this.quotes[keys[ keys.length * Math.random() << 0]];
+},
 collectStar : function(seedling, star) {
 
     // Removes the star from the screen
@@ -238,16 +250,13 @@ seedlingDies : function(seedling, baddie) {
   // go to end screen (still need to be made, just go back to menu)
   game.state.start('end',true,false,this.score,this.player.health,this.level);
   },
-speak : function(seedling, mushroomguy) {
-
-    console.log(this.text);
+speak : function() {
+    quote = this.randomQuote();
+    console.log(quote);
     var style = { font: "12px Arial", fill: "black", wordWrap: true, align: "center", backgroundColor: "transparent" };
-    var text = game.add.text(mushroomguy.x + 10, mushroomguy.y + 10, this.text, style);
-    //text.anchor.set(0.5);
-
-    text.x = mushroomguy.x + 10
-    text.y = mushroomguy.y + 10;
-    seedling.heal(20);
+    var textObject = game.add.text(this.mushroomguy.x + 10, this.mushroomguy.y + 10, quote, style);
+    console.log(this.player.health);
+    this.player.heal(20);
+    this.healthText.text = 'health: ' + this.player.health;
   }
-};
-//seedlingPower : function()
+}; // end of playState object definition
