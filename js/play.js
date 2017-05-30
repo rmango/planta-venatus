@@ -70,8 +70,8 @@ var playState = {
 
     //  create baddies in a group
     this.baddie.scale.setTo(0.5,0.5);
-    this.baddie = game.add.group();
-    this.baddie.enableBody = true;
+    this.baddies = game.add.group();
+    this.baddies.enableBody = true;
 
     //create 4 in a group in random locations
     var x;
@@ -82,7 +82,7 @@ var playState = {
       x = game.rnd.integerInRange(-800,800);
       y = game.rnd.integerInRange(-600,600);
 
-      var baddie = this.baddie.create(x, y, 'slug');
+      var baddie = this.baddies.create(x, y, 'slug');
 
       //gravity
       baddie.body.gravity.y = 2;
