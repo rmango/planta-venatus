@@ -27,6 +27,9 @@ var loadState =  {
            // ledges and other obstacles
            game.load.image('ground', 'assets/platform.png');
 
+           // background of end page
+           game.load.image('asphalt', 'assets.asphalt.jpg');
+
            //  treasures to collect to gain points
            game.load.image('star', 'assets/star.png');
 
