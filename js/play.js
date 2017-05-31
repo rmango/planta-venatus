@@ -183,10 +183,8 @@ update : function() {
     // other interactions
     game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
     game.physics.arcade.overlap(this.player, this.baddies, this.seedlingDies, null, this);
-    game.physics.arcade.overlap(this.player, this.mushroomguy, this.speak, null, {this:this, text:this.quotes.pokemon1});
-
-
     game.physics.arcade.collide(this.player, this.mushroomguy, this.speak, null, this);
+
     //  Reset the seedlings velocity (movement)
     this.player.body.velocity.x = 0;
 
@@ -243,7 +241,6 @@ randomQuote : function () {
     var keys = Object.keys(this.quotes)
     return this.quotes[keys[ keys.length * Math.random() << 0]];
 },
-
 collectStar : function(seedling, star) {
 
     // Removes the star from the screen
@@ -283,6 +280,5 @@ speak : function() {
     console.log(this.player.health);
     this.player.heal(20);
     this.healthText.text = 'health: ' + this.player.health;
-
   }
 }; // end of playState object definition
