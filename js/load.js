@@ -32,7 +32,8 @@ var loadState =  {
 
            //  treasures to collect to gain points
            game.load.image('star', 'assets/star.png');
-
+           game.load.image('continue', 'assets/continue.png');
+           game.load.image('restart', 'assets/restart.png');
            // non-playing characters
            game.load.atlasJSONArray('mushroomguy', 'assets/MushroomGuyNew.png',
            'assets/MushroomGuyNew.json');
