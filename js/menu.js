@@ -1,12 +1,12 @@
 var menuState = {
     create : function () {
       var seedlingMenuYValue = 300;
-      this.text = game.add.text(game.world.centerX + 300, 200, "Who do you want to be?",
+      this.text = game.add.text(game.world.centerX + 250, 200, "Who do you want to be?",
                                 { font: "Arial", fontSize : '24px', fill: '#ffffff', align: "center" });
       //this.button = game.add.button(game.world.centerX + 300,  300, 'seedling', this.setSprite1, this, 0,0,0,0);
-      this.button2 = game.add.button(game.world.centerX + 300, seedlingMenuYValue, 'seedlingBrown', this.setSprite2, this, 0,0,0,0);
+      this.button2 = game.add.button(game.world.centerX + 350, seedlingMenuYValue, 'seedlingBrown', this.setSprite2, this, 0,0,0,0);
       this.button3 = game.add.button(game.world.centerX + 400, seedlingMenuYValue, 'seedlingRed', this.setSprite3, this, 0,0,0,0);
-      this.button4 = game.add.button(game.world.centerX + 200, seedlingMenuYValue, 'seedlingBlue', this.setSprite4, this, 0,0,0,0);
+      this.button4 = game.add.button(game.world.centerX + 250, seedlingMenuYValue, 'seedlingBlue', this.setSprite4, this, 0,0,0,0);
        },
     //setSprite1 : function () {
         //this.start('seedling');
