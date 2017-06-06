@@ -59,13 +59,10 @@ var playState = {
     this.player.health = this.hpMax
     this.player.maxHealth = this.hpMax;
 
-    //add dog thing
-    this.baddie = game.add.sprite(396, game.world.bottom - 160, 'baddie');
-
     //  We need to enable physics on the player and the other characters
 
     this.game.physics.arcade.enable(this.player);
-    this.game.physics.arcade.enable(this.baddie);
+    //this.game.physics.arcade.enable(this.baddie);
     this.game.physics.arcade.enable(this.dandelion);
     this.game.physics.arcade.enable(this.mushroomguy);
 
@@ -75,14 +72,41 @@ var playState = {
     this.player.body.gravity.y = 300;
     this.player.body.collideWorldBounds = true;
 
+
+    //  create baddies in a group
+    //this.baddie.scale.setTo(0.5,0.5);
+    this.baddies = game.add.group();
+    this.baddies.enableBody = true;
+
+    //create 4 in a group in random locations
+    var xx;
+    var yy;
+    for (var i = 0; i < 5; i++)
+    {
+      //now create baddie(slug) inside group
+      xx = game.rnd.integerInRange(-800,800);
+      yy = game.rnd.integerInRange(-600,600);
+
+      var baddie = this.baddies.create(xx, yy, 'baddie');
+
+      var randomNumber = game.rnd.realInRange(0.1,0.5);
+      baddie.scale.setTo(randomNumber, randomNumber);
+
+      //gravity
+      baddie.body.gravity.y = 2;
+
+      //random bounce
+      baddie.body.bounce.y = Math.random() * 0.2;
+    }
+
+    //this.baddie.body.gravity.y = 300;
+    //this.baddie.body.collideWorldBounds = true;
+    //this.baddie.body.bounce.y = 0.2;
+    //this.baddie.body.velocity.x = 100;
+
     this.mushroomguy.body.bounce.y = 0.2;
     this.mushroomguy.body.gravity.y = 0;
     this.mushroomguy.body.collideWorldBounds = true;
-
-    this.baddie.body.gravity.y = 300;
-    this.baddie.body.collideWorldBounds = true;
-    this.baddie.body.bounce.y = 0.2;
-    this.baddie.body.velocity.x = 100;
 
     this.dandelion.body.bounce.y = 0.5;
     this.dandelion.body.gravity.y = 300;
@@ -137,7 +161,7 @@ var playState = {
 update : function() {
 
     // baddie turns around if it reaches the horizontal edges of the world
-    if (this.baddie.x == game.world.width - this.baddie.width)
+    /*if (this.baddie.x == game.world.width - this.baddie.width)
     {
       this.baddie.body.velocity.x = -100;
     }
@@ -145,12 +169,12 @@ update : function() {
     if (this.baddie.x == 0)
     {
       this.baddie.body.velocity.x = 100;
-    }
+    }*/
 
     // all the game elements collide with the platforms
     game.physics.arcade.collide(this.player, this.platforms);
     game.physics.arcade.collide(this.stars, this.platforms);
-    game.physics.arcade.collide(this.baddie, this.platforms);
+    game.physics.arcade.collide(this.baddies, this.platforms);
     game.physics.arcade.collide(this.dandelion, this.platforms);
 
     // other collisions
@@ -158,9 +182,9 @@ update : function() {
 
     // other interactions
     game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
-    game.physics.arcade.overlap(this.player, this.baddie, this.seedlingDies, null, this);
-
+    game.physics.arcade.overlap(this.player, this.baddies, this.seedlingDies, null, this);
     game.physics.arcade.collide(this.player, this.mushroomguy, this.speak, null, this);
+
     //  Reset the seedlings velocity (movement)
     this.player.body.velocity.x = 0;
 
@@ -217,7 +241,6 @@ randomQuote : function () {
     var keys = Object.keys(this.quotes)
     return this.quotes[keys[ keys.length * Math.random() << 0]];
 },
-
 collectStar : function(seedling, star) {
 
     // Removes the star from the screen
@@ -257,6 +280,5 @@ speak : function() {
     console.log(this.player.health);
     this.player.heal(20);
     this.healthText.text = 'health: ' + this.player.health;
-
   }
 }; // end of playState object definition
