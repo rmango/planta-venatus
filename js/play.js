@@ -8,7 +8,11 @@ var playState = {
   hpMax : 100,
   scoreText : '',
   healthText : '',
-
+  nextSprite : {
+    "seedlingBrown" : "dandelionPlayer",
+    "seedlingRed" : "flytrapPlayer",
+    "seedlingBlue" : "succulentPlayer",
+  },
   init : function(spriteKey) {
          this.spriteKey = spriteKey;
       },
@@ -64,6 +68,7 @@ var playState = {
     this.game.physics.arcade.enable(this.player);
     //this.game.physics.arcade.enable(this.baddie);
     this.game.physics.arcade.enable(this.dandelion);
+    
     this.game.physics.arcade.enable(this.mushroomguy);
 
     //  seedling physics properties. Give the little guy a slight bounce.
@@ -234,7 +239,12 @@ update : function() {
     //game.world.wrap(this.player,0,true);
 
         //console.log(game.camera.x + "This is the game camera");
-
+  if (this.score == 100) {
+    this.player = game.add.sprite(32, game.world.bottom - 160, this.nextSprite[this.spriteKey]);
+    this.level += 1; 
+    this.score = 0;
+    this.health = this.hpMax;
+  }
 
 },
 randomQuote : function () {
