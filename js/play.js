@@ -89,7 +89,7 @@ var playState = {
 
       var baddie = this.baddies.create(xx, yy, 'baddie');
 
-      var randomNumber = game.rnd.frac();
+      var randomNumber = game.rnd.realInRange(0.1,0.5);
       baddie.scale.setTo(randomNumber, randomNumber);
 
       //gravity
