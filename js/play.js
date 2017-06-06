@@ -8,7 +8,7 @@ var playState = {
   hpMax : 100,
   scoreText : '',
   healthText : '',
-  
+
   init : function(spriteKey) {
          this.spriteKey = spriteKey;
       },
@@ -18,7 +18,7 @@ var playState = {
     // -800,-600                 800,-600
     //                 0,0
     // -800,600                  800,600
-    
+
     // a timer
 
     //  A simple background for our game
@@ -277,6 +277,7 @@ speak : function() {
     console.log(quote);
     var style = { font: "12px Arial", fill: "black", wordWrap: true, align: "center", backgroundColor: "transparent" };
     var textObject = game.add.text(this.mushroomguy.x + 10, this.mushroomguy.y + 10, quote, style);
+    textObject.lifespan = 5000;
     console.log(this.player.health);
     this.player.heal(20);
     this.healthText.text = 'health: ' + this.player.health;
