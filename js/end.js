@@ -1,4 +1,5 @@
 var endState = {
+
     init : function(score,hp,level) {
         this.score = score;
         this.hp = hp;
@@ -13,10 +14,12 @@ var endState = {
         this.scoreText.fixedToCamera = true;
         this.hpText.fixedToCamera = true;
         this.levelText.fixedToCamera = true;
+        //this.startbutton = game.add.button(700,500,'continue',this.continue,this,0,0,0,0);
+        this.restartbutton = game.add.button(300,400,'restart',this.restart,this,0,0,0,0);
     },
-    continue : function() {
-        game.state.start('play');
-    },
+    //continue : function() {
+        //game.state.start('play');
+   //},
     restart : function() {
         game.state.start('menu');
     }
