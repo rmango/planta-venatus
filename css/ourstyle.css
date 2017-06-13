@@ -1,0 +1,10 @@
+body {
+  justify-content: center;
+  background-color: 'green';
+#banner {
+  font-family: 'Barrio', open-sans;
+  font-size: 48px;
+  text-align: center;
+} 
+
+}

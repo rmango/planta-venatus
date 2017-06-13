@@ -22,7 +22,14 @@ var menuState = {
     },
 
     start : function (spriteKey) {
-        console.log('spriteKey: ' + spriteKey);
-        game.state.start('play',false,false,spriteKey);
+        var level = 1;
+        var config = {
+            spriteKey : spriteKey,
+            startX : 32,
+            startY : game.world.bottom - 160,
+            level : level
+        };
+        console.log('spriteKey: ' + spriteKey + ' level: ' + level);
+        game.state.start('play',false,false,config);
        }
 };
