@@ -18,6 +18,7 @@ var playState = {
          this.startX = config.startX;
          this.startY = config.startY;
          this.level = config.level;
+
       },
   create : function() {
 
@@ -71,6 +72,7 @@ var playState = {
 
     this.game.physics.arcade.enable(this.player);
     this.game.physics.arcade.enable(this.dandelion);
+    
     this.game.physics.arcade.enable(this.mushroomguy);
 
     //  seedling physics properties. Give the little guy a slight bounce.
@@ -239,8 +241,6 @@ update : function() {
     if (this.score >= 100 && ((this.score % 100) == 0.)) {
         this.levelUp();
     };
-
-
 },
 randomQuote : function () {
     var keys = Object.keys(this.quotes)
